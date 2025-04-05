@@ -1,0 +1,58 @@
+import requests
+
+class OllamaWrapper:
+    def __init__(self, model="gemma3:27b", base_url="http://localhost:11434"):
+        self.model = model
+        self.base_url = base_url
+        self.supported_languages = {
+            'en': 'English',
+            'ru': 'Russian',
+            'es': 'Spanish',
+            'fr': 'French',
+            'de': 'German',
+            'it': 'Italian',
+            'pt': 'Portuguese',
+            'nl': 'Dutch',
+            'pl': 'Polish',
+            'zh': 'Chinese',
+            'ja': 'Japanese',
+            'ko': 'Korean',
+            'ar': 'Arabic',
+            'hi': 'Hindi',
+            'tr': 'Turkish',
+        }
+
+    def translate(self, text: str, source_lang: str, target_lang: str, model: str = None) -> str:
+        """
+        Translate text from source language to target language using Ollama API.
+        """
+        if source_lang not in self.supported_languages:
+            raise ValueError(f"Invalid language code: {source_lang}")
+        if target_lang not in self.supported_languages:
+            raise ValueError(f"Invalid language code: {target_lang}")
+
+        prompt = f"Translate this text from {source_lang} to {target_lang}. Return only the translation, no explanations or additional text: {text}"
+        
+        response = requests.post(
+            f"{self.base_url}/api/generate",
+            json={
+                "model": model or self.model,
+                "prompt": prompt,
+                "stream": False
+            }
+        )
+        response.raise_for_status()
+        
+        return response.json()["response"].strip()
+
+    def check_model_availability(self) -> bool:
+        """
+        Check if the model is available in Ollama.
+        """
+        try:
+            response = requests.get(f"{self.base_url}/api/tags")
+            response.raise_for_status()
+            models = response.json()["models"]
+            return any(model["name"] == self.model for model in models)
+        except Exception:
+            return False 
