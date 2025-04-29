@@ -1,6 +1,10 @@
-flask==3.0.2
+flask
+flask-cors
+loguru
+youtube-transcript-api
 pytest==8.0.0
 pytest-cov==4.1.0
 requests==2.31.0
 TTS==0.22.0
-torch==2.2.1 
+torch==2.2.1
+youtube-transcript-api==0.6.2

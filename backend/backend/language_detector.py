@@ -6,7 +6,7 @@ from typing import Optional, Dict
 DetectorFactory.seed = 0
 
 class LanguageDetector:
-    def __init__(self, model="llama2", base_url="http://localhost:11434"):
+    def __init__(self, model="gemma:latest", base_url="http://localhost:11434"):
         self.model = model
         self.base_url = base_url
         self.supported_languages = {

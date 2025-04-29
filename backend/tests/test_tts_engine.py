@@ -5,9 +5,9 @@ from backend.tts.engine import TTSEngine
 def test_text_to_speech_success():
     engine = TTSEngine()
     
-    # Mock TTS
+    # Mock TTS for test
     mock_tts = MagicMock()
-    mock_tts.tts.return_value = [0.0] * 1000  # Dummy audio data
+    mock_tts.tts.return_value = [0.0] * 1000  
     mock_tts.synthesizer.save_wav = lambda wav, wav_bytes: wav_bytes.write(b"dummy_wav_data")
     engine.tts = mock_tts
     
@@ -26,7 +26,7 @@ def test_text_to_speech_unsupported_language():
 def test_text_to_speech_api_error():
     engine = TTSEngine()
     
-    # Mock TTS with error
+    # Mock TTS for test with error
     mock_tts = MagicMock()
     mock_tts.tts.side_effect = Exception("TTS Error")
     engine.tts = mock_tts

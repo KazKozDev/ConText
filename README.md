@@ -1,77 +1,90 @@
-# ConText - Local Secure Translations
+# ConText - Local Secure Translation Tool
 
-ConText is a secure translation application that runs entirely locally using Ollama LLMs. It provides a clean, modern interface similar to popular translation services while ensuring your data never leaves your computer.
+ConText is a desktop app for secure, local text translation using Ollama LLMs. It supports language detection, text-to-speech, web scraping, text summarization, and YouTube transcript extraction, all processed locally.
 
-## Features
+![Cover](https://github.com/user-attachments/assets/0ceb293d-ab8f-4739-8c15-eecc6b72d857)
 
-- 🔒 Fully local translation using Ollama LLMs
-- 🌐 Support for multiple languages
-- 🎯 Clean, modern interface
-- 🔄 Real-time translation
-- 🔊 Text-to-speech support
-- 📋 Easy copy/paste functionality
-- 🔄 Language swap feature
-- ⌨️ Keyboard shortcuts support
+### Features
 
-## Prerequisites
+| Feature | Description |
+|---------|-------------|
+| Local translation | Process translations using Ollama models locally |
+| Language detection | Automatically identify the language of input text |
+| Text-to-speech | Convert text to WAV audio files |
+| Web content scraping | Extract text from websites for translation |
+| Text summarization | Create concise summaries of longer texts |
+| YouTube transcript retrieval | Get transcripts from YouTube videos |
+| Multiple language support | Translate between various languages |
+| Configurable text chunking | Customize text processing parameters |
+
+### Prerequisites
 
 - Python 3.8+
-- Node.js 16+
-- [Ollama](https://ollama.ai) installed and running
+- Ollama installed and running
 
-## Setup
+### Setup
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/KazKozDev/ConText.git
-cd ConText
+git clone https://github.com/KazKozDev/ConText.git cd ConText
 ```
 
 2. Set up the backend:
 ```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+cd backend 
+python -m venv venv 
+source venv/bin/activate # On Windows: venv\Scripts\activate 
 pip install -r requirements.txt
 ```
 
-3. Set up the frontend:
-```bash
-cd frontend
-npm install
-```
+### Running
 
-## Running the Application
-
-1. Start Ollama server:
+1. Start Ollama:
 ```bash
 ollama serve
 ```
 
-2. Start the backend server (in a new terminal):
+2. Start the backend:
 ```bash
-cd backend
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-python -m backend.app
+cd backend 
+source venv/bin/activate # On Windows: venv\Scripts\activate 
+python app.py
 ```
 
-3. Start the frontend development server (in a new terminal):
+Backend runs on http://localhost:5002.
+
+### API Reference
+
+| Endpoint | Function | Description |
+|----------|----------|-------------|
+| /health | Server status | Check if the server is running properly |
+| /translate | Translate text | Convert text between languages |
+| /detect-language | Detect language | Identify the language of input text |
+| /tts | Text-to-speech | Convert text to audio format |
+| /scrape-url | Scrape web content | Extract text from web pages |
+| /summarize | Summarize text | Create concise summaries of texts |
+| /youtube-transcript | YouTube transcript | Extract transcripts from YouTube videos |
+
+### Example Usage
+
+Translate English to Spanish:
+
 ```bash
-cd frontend
-npm start
+curl -X POST http://localhost:5002/translate \ 
+-H "Content-Type: application/json" \ 
+-d '{"text": "Hello, world!", "source_lang": "en", "target_lang": "es"}'
 ```
 
-The application will be available at http://localhost:3000
+Response:
 
-## Keyboard Shortcuts
+```json
+{"translated_text": "¡Hola, mundo!"}
+```
 
-- `Ctrl + Enter`: Translate text
-- `Ctrl + Shift + Enter`: Swap languages
+---
 
-## License
+If you like this project, please give it a star ⭐
 
-MIT License
+For questions, feedback, or support, reach out to:
 
-## Author
-
-KazKozDev 
+[Artem KK](https://www.linkedin.com/in/kazkozdev/) | MIT [LICENSE](LICENSE)
